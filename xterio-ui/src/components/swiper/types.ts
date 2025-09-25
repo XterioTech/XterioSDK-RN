@@ -16,4 +16,6 @@ export interface SwiperProps<T = any> extends ScrollViewProps {
   contentContainerStyle?: StyleProp<ViewStyle>;
   scrollWidth?: number;
   column?: number; //自定义一排放几个， 与loop结合使用
+  className?: string;
+  contentContainerClassName?: string;
 }

@@ -18,6 +18,8 @@ const InputCounter = (props: InputCounterProps) => {
     defaultValue = 1,
     min,
     max = Number.MAX_SAFE_INTEGER,
+    step = 1,
+    type = 'int',
     onChange,
     style,
     disabled,
@@ -47,6 +49,7 @@ const InputCounter = (props: InputCounterProps) => {
       setNu(n);
       setInputValue(n.toString());
       onChange?.(n);
+      // console.log('////n', n);
     },
     [onChange]
   );
@@ -55,29 +58,39 @@ const InputCounter = (props: InputCounterProps) => {
     let n = 0;
     if (!nu) {
       n = min ?? 0;
-    } else if (min && Number(nu) - 1 < min) {
+    } else if (min && Number(nu) - step < min) {
       n = min;
     } else {
-      n = Number(nu) - 1;
+      n = Number(nu) - step;
     }
     _update(n);
-  }, [_update, min, nu]);
+  }, [_update, min, nu, step]);
 
   const _plus = useCallback(() => {
     let n = 0;
     if (!nu) {
-      n = (min ?? 1) + 1;
-    } else if (max && Number(nu) + 1 > max) {
+      n = min ?? 0;
+    } else if (max && Number(nu) + step > max) {
       n = max;
     } else {
-      n = Number(nu) + 1;
+      n = Number(nu) + step;
     }
     _update(n);
-  }, [_update, max, min, nu]);
+  }, [_update, max, min, nu, step]);
 
   const _onBlur = useCallback(
     (data?: string) => {
-      const val = data?.replace(/[^0-9]/g, '') || '';
+      let val = '';
+      if (type === 'int') {
+        val = data?.replace(/[^0-9]/g, '') || '';
+      } else {
+        val = data?.replace(/[^0-9.]/g, '') || '';
+        const parts = val.split('.');
+        if (parts.length > 2) {
+          val = parts[0] + '.' + parts.slice(1).join('').replace(/\./g, '');
+        }
+      }
+
       let n: number;
       if (!val) {
         n = min ? min : 0;
@@ -88,7 +101,7 @@ const InputCounter = (props: InputCounterProps) => {
       }
       _update(n);
     },
-    [_update, max, min]
+    [_update, max, min, type]
   );
 
   useEffect(() => {
@@ -105,18 +118,21 @@ const InputCounter = (props: InputCounterProps) => {
 
   const [initHeight, setInitHeight] = useState(0);
   const _containerRef = useRef<View>(null);
-  // ✅ sync layout effect during commit
-  useLayoutEffect(() => {
+  const updateLayout = useCallback(() => {
     // ✅ sync call to read layout
     _containerRef.current?.measureInWindow((_x, _y, _width, height) => {
       setInitHeight(height);
     });
   }, []);
+  useLayoutEffect(() => {
+    updateLayout();
+  }, [updateLayout]);
 
   return (
     <View
       style={[stylesCounter.container, { borderRadius: initHeight }, style]}
       ref={_containerRef}
+      onLayout={updateLayout}
     >
       <Pressable
         disabled={!!minDisabled}
@@ -136,7 +152,23 @@ const InputCounter = (props: InputCounterProps) => {
         value={inputValue}
         onBlur={_onBlur}
         disabled={disabled}
-        onChange={(val) => setInputValue(val || '')}
+        onKeyPress={(e) => {
+          if (e.nativeEvent.key === 'Enter') {
+            _onBlur();
+          }
+        }}
+        onChangeText={(val) => {
+          if (
+            val === '' ||
+            (val && type === 'int' && /^-?\d*$/.test(val)) ||
+            (val && type === 'float' && /^-?\d*\.?\d*$/.test(val))
+          ) {
+            setInputValue(val);
+          } else {
+            // console.log('////dd', val);
+          }
+          // setInputValue(val || '');
+        }}
         {...rest}
       />
       <Pressable

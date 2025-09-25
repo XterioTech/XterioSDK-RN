@@ -10,8 +10,6 @@ export type CornerDirectionType =
 
 export interface GradientCardProps extends PropsWithChildren {
   style?: StyleProp<ViewStyle>;
-  width?: number;
-  height?: number;
   strokeWidth?: number;
   fill?: string;
   stroke?: string;
@@ -25,4 +23,5 @@ export interface GradientCardProps extends PropsWithChildren {
   backgroundDirection?: GradientDirectionType;
   img?: string | ImageProps['source'];
   absolute?: boolean;
+  className?: string;
 }

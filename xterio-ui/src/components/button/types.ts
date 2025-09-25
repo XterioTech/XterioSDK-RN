@@ -39,4 +39,6 @@ export interface ButtonProps extends PropsWithChildren {
   fontStyle?: TextStyle['fontStyle'];
   fontFamily?: TextStyle['fontFamily'];
   innerRef?: RefObject<View | null>;
+  className?: string;
+  titleClassName?: string;
 }

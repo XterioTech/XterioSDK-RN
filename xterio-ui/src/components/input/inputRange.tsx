@@ -17,6 +17,8 @@ const InputRange = (props: InputRangeProps) => {
     style,
     inputTextStyle,
     theme = 'normal',
+    type = 'int',
+    ...rest
   } = props;
 
   const themeData = ThemeDataConfig[theme];
@@ -74,10 +76,15 @@ const InputRange = (props: InputRangeProps) => {
 
   const _onBlur = useCallback(
     (tag: 'left' | 'right', text?: string) => {
-      let val = text?.replace(/[^0-9.]/g, '') || '';
-      const parts = val.split('.');
-      if (parts.length > 2) {
-        val = parts[0] + '.' + parts.slice(1).join('').replace(/\./g, '');
+      let val = '';
+      if (type === 'int') {
+        val = text?.replace(/[^0-9]/g, '') || '';
+      } else {
+        val = text?.replace(/[^0-9.]/g, '') || '';
+        const parts = val.split('.');
+        if (parts.length > 2) {
+          val = parts[0] + '.' + parts.slice(1).join('').replace(/\./g, '');
+        }
       }
 
       const isleft = tag === 'left';
@@ -104,7 +111,23 @@ const InputRange = (props: InputRangeProps) => {
       }
       setIsChange(true);
     },
-    [max, min]
+    [max, min, type]
+  );
+  const handleInputValue = useCallback(
+    (tag: 'left' | 'right', text?: string) => {
+      if (
+        text === '' ||
+        (text && type === 'int' && /^-?\d*$/.test(text)) ||
+        (text && type === 'float' && /^-?\d*\.?\d*$/.test(text))
+      ) {
+        if (tag === 'left') {
+          setLeftInputValue(text || '');
+        } else {
+          setRightInputValue(text || '');
+        }
+      }
+    },
+    [type]
   );
 
   useEffect(() => {
@@ -149,8 +172,9 @@ const InputRange = (props: InputRangeProps) => {
         placeholder={leftPlace}
         onBlur={(val: string) => _onBlur('left', val)}
         onFocus={() => setLeftFocus(true)}
-        onChange={(val) => setLeftInputValue(val || '')}
+        onChangeText={(val) => handleInputValue('left', val)}
         theme={theme}
+        {...rest}
       />
       <View
         style={[stylesRange.gap, { backgroundColor: themeData.labelColor }]}
@@ -164,8 +188,9 @@ const InputRange = (props: InputRangeProps) => {
         placeholder={rightPlace}
         onBlur={(val: string) => _onBlur('right', val)}
         onFocus={() => setRightFocus(true)}
-        onChange={(val) => setRightInputValue(val || '')}
+        onChangeText={(val) => handleInputValue('right', val)}
         theme={theme}
+        {...rest}
       />
     </View>
   );

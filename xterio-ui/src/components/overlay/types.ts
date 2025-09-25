@@ -17,4 +17,7 @@ export interface OverlayProps
   backdropStyle?: StyleProp<ViewStyle>;
   overlayStyle?: StyleProp<ViewStyle>;
   containerStyle?: StyleProp<ViewStyle>;
+  backdropClassName?: string;
+  overlayClassName?: string;
+  containerClassName?: string;
 }

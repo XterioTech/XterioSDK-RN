@@ -13,4 +13,6 @@ export interface MultiTextProps extends PropsWithChildren {
   style?: StyleProp<TextStyle>;
   moreStyle?: StyleProp<ViewStyle>;
   renderMore?(more: boolean): JSX.Element;
+  className?: string;
+  moreClassName?: string;
 }

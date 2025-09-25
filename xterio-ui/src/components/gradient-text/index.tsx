@@ -1,4 +1,4 @@
-import { useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 import type { GradientTextProp } from './types';
 import {
@@ -15,16 +15,16 @@ import { LinearGradientsDef, useGetDireactPoints } from '../base/gradient';
 let seed = 1;
 const GradientText = (props: GradientTextProp) => {
   const {
-    fontSize = 14,
-    fontStyle,
-    fontWeight,
-    fontFamily,
-    textAlign,
     numberOfLines,
     text,
     colors = ['#9EE6FC', '#EBB9E7'],
     direction = 'to right',
     children,
+    style,
+    fontWeight,
+    fontSize = 14,
+    fontFamily,
+    fontStyle,
   } = props;
 
   const [show, setShow] = useState(true);
@@ -34,15 +34,18 @@ const GradientText = (props: GradientTextProp) => {
   const [charSize, setCharSize] = useState(10);
 
   const _containerRef = useRef<RNText>(null);
-  // ✅ sync layout effect during commit
-  useLayoutEffect(() => {
-    // ✅ sync call to read layout
+  const updateLayout = useCallback(() => {
     _containerRef.current?.measureInWindow((_x, _y, width, height) => {
       // console.log('x', x, y, width, height);
       setInitHeight(height);
       setInitWidth(width);
     });
   }, []);
+  // ✅ sync layout effect during commit
+  useLayoutEffect(() => {
+    // ✅ sync call to read layout
+    updateLayout();
+  }, [updateLayout]);
 
   const points = useGetDireactPoints(direction);
   const uid = useMemo(() => {
@@ -58,18 +61,14 @@ const GradientText = (props: GradientTextProp) => {
           ref={_containerRef}
           style={[
             styles.text,
-            {
-              fontSize,
-              textAlign,
-              fontStyle,
-              fontWeight,
-              fontFamily,
-            },
+            { fontSize, fontFamily, fontWeight, fontStyle },
+            style,
           ]}
           onLayout={() => {
             if (isWeb) {
               setShow(false);
             }
+            updateLayout();
           }}
           onTextLayout={(e: NativeSyntheticEvent<TextLayoutEventData>) => {
             const lines = e.nativeEvent.lines;

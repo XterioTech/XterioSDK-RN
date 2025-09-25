@@ -17,4 +17,6 @@ export interface CutCornerTipProps extends PropsWithChildren {
   cornerAxis?: 'x' | 'y';
   style?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
+  className?: string;
+  textClassName?: string;
 }

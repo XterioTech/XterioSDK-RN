@@ -22,4 +22,11 @@ export interface TabProps<T extends ITabOption> {
   activeItemStyle?: StyleProp<ViewStyle>;
   labelStyle?: StyleProp<TextStyle>;
   activeLabelStyle?: StyleProp<TextStyle>;
+  className?: string;
+  indicatorClassName?: string;
+  activeIndicatorClassName?: string;
+  itemClassName?: string;
+  activeItemClassName?: string;
+  lableClassName?: string;
+  activeLabelClassName?: string;
 }

@@ -8,4 +8,5 @@ export interface SwitchProps {
   color?: string;
   activeColor?: string;
   padding?: number;
+  className?: string;
 }

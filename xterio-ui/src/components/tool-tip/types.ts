@@ -7,4 +7,5 @@ type PickPopUpType = Partial<PopOverProps>;
 export interface ToolTipProps extends PropsWithChildren<PickPopUpType> {
   text: string;
   textStyle?: StyleProp<TextStyle>;
+  textClassName?: string;
 }

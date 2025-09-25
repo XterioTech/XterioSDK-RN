@@ -21,6 +21,7 @@ const Collapsible = (props: CollapsibleProps) => {
     contentStyle,
     style,
     activeTitleStyle,
+    textStyle,
     onPress,
   } = props;
 
@@ -65,10 +66,10 @@ const Collapsible = (props: CollapsibleProps) => {
           title
         ) : (
           <>
-            <Text style={styles.text}>{title}</Text>
+            <Text style={[styles.text, textStyle]}>{title}</Text>
             {hasChild && (
               <Animated.View style={[animatedStyle]}>
-                <IconArrow size={16} color={'#fefefe'} />
+                <IconArrow size={16} color={'#fefefe'} style={textStyle} />
               </Animated.View>
             )}
           </>

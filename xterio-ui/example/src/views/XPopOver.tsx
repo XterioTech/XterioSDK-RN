@@ -29,7 +29,7 @@ export default function Demo() {
   return (
     <ScrollView style={{ flex: 1, backgroundColor: '#141430' }}>
       <Margin gap={10} />
-      <XPopOver
+      {/* <XPopOver
         place={'bottom-start'}
         triggerStyle={{ width: 200 }}
         contentStyle={{ width: 300, height: 300 }}
@@ -62,7 +62,7 @@ export default function Demo() {
         bgColor="red"
       >
         <Text className="text-[#fefefe]">This is content</Text>
-      </XPopOver>
+      </XPopOver> 
       <Margin gap={10} />
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <XToolTip
@@ -84,6 +84,8 @@ export default function Demo() {
           <Text className="text-[#ffffff]">This is tooptip custom button</Text>
         }
       />
+      */}
+
       <Margin gap={10} />
       <XButton
         title="open modal"
@@ -148,6 +150,7 @@ export default function Demo() {
         </Text>
       </XModal>
       <Margin gap={10} />
+      {/*
       <XSelect
         options={Data}
         type={'actionsheet'}
@@ -169,9 +172,9 @@ export default function Demo() {
         theme={'dark'}
         placeholderText="this is a menu"
       />
-      <Margin gap={10} />
+      <Margin gap={10} /> */}
 
-      <View style={{ backgroundColor: 'white', padding: 10 }}>
+      {/* <View style={{ backgroundColor: 'white', padding: 10 }}>
         <Margin gap={10} />
         <XSelect
           options={Data}
@@ -199,7 +202,7 @@ export default function Demo() {
         />
 
         <Margin gap={150} />
-      </View>
+      </View> */}
     </ScrollView>
   );
 }

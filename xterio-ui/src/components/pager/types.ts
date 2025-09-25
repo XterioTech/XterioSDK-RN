@@ -6,6 +6,12 @@ export interface PagerProps {
   onPageChange(pagenum: number): void;
   style?: StyleProp<ViewStyle>;
   itemStyle?: StyleProp<ViewStyle>;
+  selectItemStyle?: StyleProp<ViewStyle>;
+  arrowStyle?: StyleProp<ViewStyle>;
   textColor?: string;
   selectTextColor?: string;
+  className?: string;
+  itemClassName?: string;
+  selectItemClassName?: string;
+  arrowClassName?: string;
 }

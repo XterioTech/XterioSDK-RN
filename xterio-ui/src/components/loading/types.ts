@@ -19,6 +19,7 @@ export interface LoadingProps {
   frontColor?: string;
   logo?: ReactElement;
   style?: StyleProp<ViewStyle>;
+  className?: string;
 }
 
 export type LoadingColor = {

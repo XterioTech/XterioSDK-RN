@@ -9,4 +9,5 @@ export interface CheckboxProps {
   activeColor?: string;
   iconColor?: string;
   size?: number;
+  className?: string;
 }

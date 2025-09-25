@@ -36,4 +36,7 @@ export interface PopOverProps extends PropsWithChildren<PcikOverlayProps> {
   triggerStyle?: StyleProp<ViewStyle>;
   arrowStyle?: StyleProp<ViewStyle>;
   contentWidth?: number;
+  triggerClassName?: string;
+  contentClassName?: string;
+  arrowClassName?: string;
 }

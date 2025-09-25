@@ -7,8 +7,8 @@ import Svg, {
   Image as SImg,
 } from 'react-native-svg';
 import type { GradientCardProps } from './types';
-import { StyleSheet, View } from 'react-native';
-import { useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { StyleSheet, View, type ViewStyle } from 'react-native';
+import { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { LinearGradientsDef, useGetDireactPoints } from '../base/gradient';
 
 let seed = 1;
@@ -166,28 +166,35 @@ const GradientCard = (props: GradientCardProps) => {
   }, [background, img, stroke, uid]);
 
   const _ref = useRef<View>(null);
-  // ✅ sync layout effect during commit
-  useLayoutEffect(() => {
-    // ✅ sync call to read layout
+  const updateLayout = useCallback(() => {
     _ref.current?.measureInWindow((_x, _y, width, height) => {
       // console.log('////', width, height);
       setInitWidth(width);
       setInitHeight(height);
     });
   }, []);
+  // ✅ sync layout effect during commit
+  useLayoutEffect(() => {
+    // ✅ sync call to read layout
+    updateLayout();
+  }, [updateLayout]);
+
+  const dynamicStyle = useMemo(() => {
+    let sty: ViewStyle = {};
+    if (initWidth) {
+      sty.width = initWidth;
+    }
+    if (initHeight) {
+      sty.height = initHeight;
+    }
+    return sty;
+  }, [initHeight, initWidth]);
 
   return (
     <View
       ref={_ref}
-      style={[
-        absolute
-          ? StyleSheet.absoluteFill
-          : {
-              width: initWidth,
-              height: initHeight,
-            },
-        style,
-      ]}
+      style={[absolute ? StyleSheet.absoluteFill : dynamicStyle, style]}
+      onLayout={updateLayout}
     >
       <Svg
         style={StyleSheet.absoluteFill}

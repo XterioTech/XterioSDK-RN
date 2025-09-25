@@ -96,8 +96,7 @@ const Button = (props: ButtonProps) => {
   );
 
   const _containerRef = useRef<View>(null);
-  // ✅ sync layout effect during commit
-  useLayoutEffect(() => {
+  const updateLayout = useCallback(() => {
     const containerRef = innerRef ?? _containerRef;
     // ✅ sync call to read layout
     containerRef.current?.measureInWindow((_x, _y, _width, height) => {
@@ -105,6 +104,10 @@ const Button = (props: ButtonProps) => {
       setBorderRadius(height / 2);
     });
   }, [innerRef]);
+  // ✅ sync layout effect during commit
+  useLayoutEffect(() => {
+    updateLayout();
+  }, [innerRef, updateLayout]);
 
   return (
     <Pressable
@@ -117,6 +120,7 @@ const Button = (props: ButtonProps) => {
         style,
         disabled && disabledStyle,
       ]}
+      onLayout={updateLayout}
     >
       {type === 'gradient' || type === 'gradient-bg' ? (
         <GradientCard

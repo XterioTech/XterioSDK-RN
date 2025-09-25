@@ -15,4 +15,5 @@ export interface ImageProps
   placeholder?: ImageSource | string | ImageRequireSource;
   height?: number;
   width?: number;
+  className?: string;
 }

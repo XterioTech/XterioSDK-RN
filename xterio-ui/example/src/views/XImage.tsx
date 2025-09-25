@@ -20,13 +20,13 @@ export default function Demo() {
         <XImage
           source={{ uri: 'https://picsum.photos/seed/696/3000/2000' }}
           style={{ width: 80, height: 80 }}
-          contentPosition={'bottom center'}
+          contentPosition={'right'}
         />
         <Margin />
         <XImage
           source={'https://picsum.photos/seed/696/3000/2000'}
           style={{ width: 80, height: 80 }}
-          blurRadius={20}
+          blurRadius={200}
         />
         <Margin />
         <XImage

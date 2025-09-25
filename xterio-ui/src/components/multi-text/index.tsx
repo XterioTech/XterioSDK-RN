@@ -64,7 +64,9 @@ const MultiText = (props: MultiTextProps) => {
             renderMore(number !== 0)
           ) : ishover ? (
             <>
-              <GradientCard absolute background colors={moreBgColors} />
+              {moreBgColors && (
+                <GradientCard absolute background colors={moreBgColors} />
+              )}
               <Text style={{ color: moreTextColor }}>{moreText}</Text>
             </>
           ) : (

@@ -4,10 +4,12 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'center',
+    alignItems: 'center',
   },
   item: {
     width: 32,
     height: 32,
+    borderRadius: '50%',
     alignItems: 'center',
     justifyContent: 'center',
   },

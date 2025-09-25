@@ -1,4 +1,11 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { TextInput, View, Pressable, Text } from 'react-native';
 import Animated, {
   useAnimatedStyle,
@@ -14,7 +21,7 @@ export const ThemeDataConfig = {
   normal: {
     textColor: '#FEFEFE',
     labelColor: '#FEFEFE66',
-    cursorColor: '#0A1161',
+    cursorColor: '#FEFEFE',
     borderColor: '#FEFEFE33',
     focusBorderColor: '#7DD5F9',
     disabledBorderColor: '#FEFEFE0D',
@@ -51,6 +58,7 @@ const Input = (props: InputProps) => {
     onClear,
     prefixComp,
     suffixComp,
+    cursorColor,
     ...rest
   } = props;
   const themeData = ThemeDataConfig[theme];
@@ -89,14 +97,17 @@ const Input = (props: InputProps) => {
   }, [isFocus, disabled, showErrorVisible, themeData]);
 
   const [initHeight, setInitHeight] = useState(60);
-  const _containerRef = useRef<View>(null);
-  // ✅ sync layout effect during commit
-  useLayoutEffect(() => {
-    // ✅ sync call to read layout
+  const updateLayout = useCallback(() => {
     _containerRef.current?.measureInWindow((_x, _y, _width, height) => {
       setInitHeight(height);
     });
   }, []);
+  const _containerRef = useRef<View>(null);
+  // ✅ sync layout effect during commit
+  useLayoutEffect(() => {
+    // ✅ sync call to read layout
+    updateLayout();
+  }, [updateLayout]);
 
   useEffect(() => {
     if (hasInputOffset) {
@@ -123,6 +134,7 @@ const Input = (props: InputProps) => {
             : styles.multiContainer,
           containerStyle,
         ]}
+        onLayout={updateLayout}
       >
         {prefixComp}
         <View style={styles.inputContainer}>
@@ -147,8 +159,8 @@ const Input = (props: InputProps) => {
               inputTextStyle,
             ]}
             value={title}
-            cursorColor={themeData.cursorColor}
-            selectionColor={themeData.cursorColor}
+            cursorColor={cursorColor || themeData.cursorColor}
+            selectionColor={cursorColor || themeData.cursorColor}
             secureTextEntry={showPassword && !passwordVisible ? true : false}
             onChangeText={(val) => {
               setTitle(val);

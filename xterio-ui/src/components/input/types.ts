@@ -33,6 +33,10 @@ export interface InputProps extends PropsWithChildren, OmitInputProps {
   onClear?(): void;
   suffixComp?: ReactNode;
   prefixComp?: ReactNode;
+  cursorColor?: string;
+  className?: string;
+  containerClassName?: string;
+  inputTextClassName?: string;
 }
 
 export interface InputCounterProps
@@ -41,6 +45,8 @@ export interface InputCounterProps
   defaultValue?: number;
   min?: number;
   max?: number;
+  step?: number;
+  type?: 'int' | 'float';
   style?: StyleProp<ViewStyle>;
   iconSize?: number;
   iconColor?: string;
@@ -49,9 +55,10 @@ export interface InputCounterProps
 }
 
 export interface InputRangeProps
-  extends Pick<InputProps, 'inputTextStyle' | 'theme'> {
+  extends Omit<InputProps, 'style' | 'onChange' | 'value' | 'defaultValue'> {
   min?: number;
   max?: number;
+  type?: 'int' | 'float';
   leftPlaceholder?: string;
   rightPlaceholder?: string;
   values?: [number, number];

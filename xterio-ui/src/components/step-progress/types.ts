@@ -15,4 +15,6 @@ export interface StepProgressProps<T = DefaultItemType> {
   renderPoint?(p: { item: T; index: number; selected?: boolean }): JSX.Element;
   type?: 'stage' | 'progress';
   direction?: 'row' | 'column';
+  className?: string;
+  itemClassName?: string;
 }

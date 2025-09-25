@@ -41,3 +41,16 @@ const Demo = () => {
   return <XButton title="confirm" type={'confirm'} onPress={_onPress} />;
 };
 ```
+
+## Components
+
+### `XButton`
+
+<p align="center">
+  <img alt="xterio-ui-rn" src="./images/button.gif" width="200">
+</p>
+
+|
+
+### `Checkbox`
+

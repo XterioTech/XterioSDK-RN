@@ -18,6 +18,13 @@ export default function Demo() {
           titleStyle={{ color: 'red' }}
           onPress={_onPress}
         />
+        <XButton
+          title="confirm"
+          titleClassName={'text-[white] !text-[30px]'}
+          className="bg-[red]"
+          onPress={_onPress}
+          type={'confirm'}
+        />
         <Margin gap={10} />
         <XButton title="confirm" type={'confirm'} onPress={_onPress} />
         <Margin gap={10} />
@@ -25,7 +32,7 @@ export default function Demo() {
         <Margin gap={10} />
         <XButton title="white" type={'white'} />
         <Margin gap={10} />
-        <XButton title="Click" type={'gradient'} />
+        <XButton title="Click" type={'gradient'} titleClassName='!font-bold'/>
         <Margin />
         <XButton title="Click" type={'gradient-bg'} />
         <Margin />
@@ -35,11 +42,10 @@ export default function Demo() {
           title="Click"
           type={'pink'}
           size={'large'}
-          disabled
           loading
           loadingSize={25}
           loadingWeight={6}
-          loadingVariant={'cyan'}
+          loadingVariant={'white'}
         />
         <Margin />
         <XButton

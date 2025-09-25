@@ -34,12 +34,22 @@ export default function XLoadingDemo() {
         <Margin />
         <XInput multiline />
         <Margin />
-        <XInputCounter value={20} inputTextStyle={{ fontSize: 20 }} />
+        <XInputCounter
+          type={'float'}
+          value={5.40}
+          inputTextStyle={{ fontSize: 20 }}
+        />
         <Margin />
-        <XInputCounter min={1} max={10} inputTextStyle={{ fontSize: 20 }} />
+        <XInputCounter
+          step={2}
+          min={1}
+          max={10}
+          inputTextStyle={{ fontSize: 20 }}
+        />
         <Margin />
         <XInputRange
           values={[1.5, 2.5]}
+          type="float"
           onChange={(p) => {
             console.log('input range:', p);
           }}

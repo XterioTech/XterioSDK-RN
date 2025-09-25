@@ -12,6 +12,7 @@ const PageItem = (props: {
   textColor?: string;
   selectTextColor?: string;
   itemStyle?: PagerProps['itemStyle'];
+  selectItemStyle?: PagerProps['selectItemStyle'];
 }) => {
   const {
     idx,
@@ -21,13 +22,21 @@ const PageItem = (props: {
     textColor = '#fefefe',
     selectTextColor,
     itemStyle,
+    selectItemStyle,
   } = props;
-  const bgColor = active ? textColor : 'transparent';
   const color = active ? selectTextColor : textColor;
   return (
-    <Pressable onPress={onPress} style={[styles.item, itemStyle]}>
+    <Pressable
+      onPress={onPress}
+      style={[
+        styles.item,
+        idx !== undefined && active && { backgroundColor: textColor },
+        itemStyle,
+        active && selectItemStyle,
+      ]}
+    >
       {idx !== undefined ? (
-        <View style={[styles.num, { backgroundColor: bgColor }]}>
+        <View style={[styles.num]}>
           <Text style={[styles.text, { color: color }]}>{idx + 1}</Text>
         </View>
       ) : icon ? (
@@ -43,8 +52,10 @@ const Pager = (props: PagerProps) => {
     onPageChange,
     style,
     itemStyle,
+    selectItemStyle,
     textColor = '#fefefe',
     selectTextColor = '#141430',
+    arrowStyle,
   } = props;
 
   const [pageIdx, setPageIdx] = useState(page || 0);
@@ -91,7 +102,7 @@ const Pager = (props: PagerProps) => {
     <View style={[styles.container, style]}>
       <Pressable
         onPress={prevPage}
-        style={[styles.item, itemStyle]}
+        style={[styles.item, arrowStyle]}
         disabled={pageIdx === 0}
       >
         <IconArrow
@@ -113,6 +124,7 @@ const Pager = (props: PagerProps) => {
             textColor={textColor}
             selectTextColor={selectTextColor}
             itemStyle={itemStyle}
+            selectItemStyle={selectItemStyle}
           />
         ) : (
           <PageItem
@@ -121,12 +133,13 @@ const Pager = (props: PagerProps) => {
             textColor={textColor}
             selectTextColor={selectTextColor}
             itemStyle={itemStyle}
+            selectItemStyle={selectItemStyle}
           />
         )
       )}
       <Pressable
         onPress={nextPage}
-        style={[styles.item, itemStyle]}
+        style={[styles.item, arrowStyle]}
         disabled={pageIdx === count - 1}
       >
         <IconArrow

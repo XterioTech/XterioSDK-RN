@@ -6,4 +6,7 @@ export interface ScrollNumberProps {
   style?: StyleProp<ViewStyle>;
   itemStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
+  className?: string;
+  itemClassName?: string;
+  textClassName?: string;
 }

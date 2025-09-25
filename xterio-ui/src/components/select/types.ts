@@ -31,4 +31,7 @@ export interface SelectProps<T extends OptionItem> extends ModalProps {
   popBgColor?: PopOverProps['bgColor'];
   offset?: PopOverProps['offset'];
   maxHeight?: number;
+  triggerClassName?: string;
+  rowClassName?: string;
+  rowSelectClassName?: string;
 }

@@ -47,7 +47,7 @@ export default function Demo() {
           wings of butterflies and flying in groups in your direction.
         </XGradientText>
         <Margin />
-        <XGradientText fontSize={20} textAlign={'center'}>
+        <XGradientText className="text-xl text-center">
           HELLO WORLD
         </XGradientText>
         <Margin gap={10} />
@@ -58,7 +58,7 @@ export default function Demo() {
           <Text className="text-white">hello world</Text>
         </View>
         <Margin gap={10} />
-        <XGradientCard style={{ width: '100%', height: 80 }}>
+        <XGradientCard>
           <Text className="text-white">hello world</Text>
           <Text className="text-white">hello world</Text>
         </XGradientCard>
